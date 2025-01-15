@@ -1,4 +1,4 @@
-# Regression-Analysis-on-Key-Factors-Influencing-Student-Exam-Scores
+# Regression Analysis on Key Factors Influencing Student Exam Scores
 
 This report analyzes factors that influence student exam scores using multiple regression
 analysis. The main objective of this project is to determine the impact of Hours_Studied,
