@@ -1,29 +1,66 @@
-# Regression Analysis on Key Factors Influencing Student Exam Scores
+# Student Performance Regression Analysis
 
-## Overview
-This project analyzes how various factors such as study hours, attendance, and peer influence affect student exam scores. Utilizing multiple regression analysis, this study aims to understand and quantify the impact of these factors on academic performance.
+An R-based multiple regression analysis of how study time, attendance, and peer influence are associated with student exam scores.
+
+## Project overview
+
+This project evaluates weekly hours studied, attendance percentage, and peer influence as predictors of exam performance. It compares an initial multiple linear regression with a model using a log-transformed exam score and examines residual behavior, autocorrelation, multicollinearity, and influential observations.
 
 ## Dataset
-The dataset includes variables such as Exam_Score, Hours_Studied, Attendance, and Peer_Influence, categorized into positive, neutral, and negative influences. It contains data gathered from student performance metrics.
 
-## Regression Model
-The regression model incorporates these variables to predict exam scores. The analysis includes:
-- Initial and log-transformed models to address heteroscedascity.
-- Diagnostic tests for autocorrelation, multicolinearity, and influential points.
+The project uses the [Student Performance Factors dataset on Kaggle](https://www.kaggle.com/datasets/lainguyn123/student-performance-factors). The published dataset contains 6,607 observations and 20 variables covering study habits, attendance, family and school context, lifestyle factors, and exam performance.
 
-## Model Equation 
-Exam_Score = β0 + β1(Hours_Studied) + β2(Attendance) + β3(Peer_Influence_1) + β4(Peer_Influence_2)
+The data file is not included. Download `StudentPerformanceFactors.csv` from Kaggle and place it in the repository's root directory before running the analysis. Keep the CSV out of the GitHub upload and direct users to the original source.
 
-## Predictors
-- Hours_Studied: Continous variable indicating weekly study hours.
-- Attendance: Continous variable representing attendance percentage.
-- Peer_Influence: Categorical variable with levels(Positive, Neutral, Negative).
+## Research question
 
-## Results
-The log-transformed model improved fit and reduced heteroscedasticity, explaining approximately 59.3% of the variance in exam scores. The study highlights the significant positive impact of study hours and attendance and the negative effects of neutral or negative peer influence.
+How are hours studied, attendance, and peer influence associated with student exam scores?
 
-## Conclusions
-The findings emphasize the importance of study habits and the environment on student outcomes. Interventions to promote effective study strategies and positive peer interactions are suggested to enhance academic performance.
+## Selected findings
 
-## Reference
-Data sourced from https://www.kaggle.com/datasets/lainguyn123/student-performance-factors/data.
+In the initial model:
+
+- each additional weekly study hour was associated with an estimated **0.29-point increase** in exam score;
+- each additional attendance percentage point was associated with an estimated **0.20-point increase** in exam score;
+- neutral peer influence was associated with an estimated **0.52-point lower** score than positive peer influence; and
+- negative peer influence was associated with an estimated **1.03-point lower** score than positive peer influence.
+
+All included predictors were reported as statistically significant. The initial model had an R-squared of approximately **0.551**, while the log-response model had an R-squared of approximately **0.593**. Because the outcomes are measured on different scales, these R-squared values should not be treated as a direct predictive-performance comparison.
+
+These findings are associations and should not be interpreted as causal effects.
+
+## Repository contents
+
+```text
+student-performance-regression-analysis/
+├── README.md
+├── student-performance-regression.Rmd
+├── student-performance-regression-report.pdf
+├── methodology.md
+└── data-dictionary.md
+```
+
+## Reproduce the analysis
+
+1. Download `StudentPerformanceFactors.csv` from the [Kaggle dataset page](https://www.kaggle.com/datasets/lainguyn123/student-performance-factors).
+2. Place the CSV in the repository's root directory.
+3. Open `student-performance-regression.Rmd` in RStudio.
+4. Install the required packages if needed:
+
+```r
+install.packages(c("tidyverse", "lmtest", "car", "MASS"))
+```
+
+5. Knit the R Markdown file to HTML or PDF.
+
+## GitHub repository description
+
+> Multiple regression analysis of how study time, attendance, and peer influence are associated with student exam scores using R.
+
+## Responsible use
+
+This project is intended for educational analysis. Student performance is shaped by many observed and unobserved factors, and results should not be used to label students or make high-stakes educational decisions.
+
+## Author
+
+Yingqi Jiang

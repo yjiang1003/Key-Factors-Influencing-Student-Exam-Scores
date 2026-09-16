@@ -1,0 +1,80 @@
+---
+title: "Regression Analysis on Factors Influencing Student Exam Scores"
+subtitle: Yingqi Jiang
+date: "2024-11-04"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+df <- read.csv("StudentPerformanceFactors.csv", header=TRUE, sep=",")
+summary(df)
+
+# Set the peer-influence reference category to Positive
+df$Peer_Influence <- factor(df$Peer_Influence,
+                                      levels = c("Positive", "Neutral", "Negative"))
+
+# Fit the linear regression model
+model1 <- lm(Exam_Score ~ Hours_Studied + Attendance + Peer_Influence, data = df)
+
+summary(model1)
+```
+
+```{r}
+library(tidyverse)
+library(lmtest)
+library(car)
+library(MASS)
+
+# DW test for autocorrelation
+dwtest(model1)
+
+# check heteroscedasticity
+plot(model1$residuals ~ model1$fitted.values, main="Residuals vs Fitted", xlab = "Fitted Values", ylab = "Residuals")
+abline(h=0, col="red")
+
+# VIF for multicollinearity
+vif(model1)
+
+# Influential points using Cook's distance
+cooksd <- cooks.distance(model1)
+plot(cooksd, main="Cook's Distance", ylab="Cook's Distance")
+abline(h=4/length(cooksd), col="red")
+```
+
+```{r}
+# Apply a log transformation to the response variable
+df$ExamScore_log <- log(df$Exam_Score)
+
+# Refit the model using the transformed response variable
+model_transformed <- lm(ExamScore_log ~ Hours_Studied + Attendance + Peer_Influence, data = df)
+
+# Summarize the transformed model
+summary(model_transformed)
+```
+
+```{r}
+# Plot Residuals vs. Fitted Values for the transformed model
+plot(model_transformed$residuals ~ model_transformed$fitted.values,
+     main = "Residuals vs Fitted (Transformed Model)",
+     xlab = "Fitted Values",
+     ylab = "Residuals")
+abline(h = 0, col = "red")
+
+# Recheck Cook's Distance for influential points
+cooksd_transformed <- cooks.distance(model_transformed)
+plot(cooksd_transformed, main = "Cook's Distance (Transformed Model)", ylab = "Cook's Distance")
+abline(h = 4/length(cooksd_transformed), col = "red")
+
+# DW test for the transformed model
+library(lmtest)
+dwtest(model_transformed)
+
+# Check VIF for the transformed model
+vif(model_transformed)
+```
