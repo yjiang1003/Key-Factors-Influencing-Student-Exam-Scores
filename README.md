@@ -53,10 +53,6 @@ install.packages(c("tidyverse", "lmtest", "car", "MASS"))
 
 5. Knit the R Markdown file to HTML or PDF.
 
-## GitHub repository description
-
-> Multiple regression analysis of how study time, attendance, and peer influence are associated with student exam scores using R.
-
 ## Responsible use
 
 This project is intended for educational analysis. Student performance is shaped by many observed and unobserved factors, and results should not be used to label students or make high-stakes educational decisions.
